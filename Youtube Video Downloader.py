@@ -1,25 +1,28 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jul 11 13:56:19 2020
-
-@author: user
-"""
-
+from tkinter import *
 from pytube import YouTube
 
+## Creating Display
 
+display = Tk()
+display.geometry('500x300')
+display.resizable(0, 0)
+display.title("Youtube Video Downloader")
 
-url = input("Enter the url of the video: ")
+## Labeling the input Box
+Label(display,text = 'Youtube Video Downloader', font='Times 18 bold').pack()
 
+link = StringVar()
 
-yt= YouTube(url)  ##Creating object of Youtube class
+Label(display, text = 'Paste Link Here:', font = 'Times 15 bold').place(x= 160 , y = 60)
+link_enter = Entry(display, width = 70,textvariable = link).place(x = 32, y = 90)
 
+##Downloading Video
+def Downloader():     
+    url =YouTube(str(link.get()))
+    video = url.streams.get_by_resolution("720p")
+    video.download()
+    Label(display, text = 'DOWNLOADED', font = 'Times 15').place(x= 180 , y = 210)  
 
+Button(display,text = 'DOWNLOAD', font = 'Times 15 bold' ,bg = 'violet red', padx = 2, command = Downloader).place(x=180 ,y = 150)
 
-video= yt.streams.first()  ##Selecting the First streams from all the available streams
-
-
-final= video.download(#address in string format)
-##Downloading video with .download function to your preferred location
- 
-print('Done')
+display.mainloop()
